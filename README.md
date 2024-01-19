@@ -3,7 +3,7 @@
 ### Instructions
 
 ```
-git clone https://github.com/matheusgadelha/nvim-config.git ~/config/nvim/
+git clone https://github.com/matheusgadelha/nvim-config.git ~/.config/nvim/
 ```
 
 ### Screenshot
