@@ -7,5 +7,6 @@ return{
     vim.keymap.set('n', '<leader>sg', builtin.live_grep, {})
     vim.keymap.set('n', '<leader>sb', builtin.buffers, {})
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, {})
+    vim.keymap.set('n', '<leader>ss', builtin.grep_string, {})
   end
 }
