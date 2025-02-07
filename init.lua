@@ -26,14 +26,14 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local group_cdpwd = vim.api.nvim_create_augroup("group_cdpwd", { clear = true })
-vim.api.nvim_create_autocmd("VimEnter", {
-  group = group_cdpwd,
-  pattern = "*",
+-- Enable true color support
+vim.opt.termguicolors = true
+
+-- Prevent terminal clearing on exit
+vim.api.nvim_create_autocmd("VimLeave", {
   callback = function()
-    vim.api.nvim_set_current_dir(vim.fn.expand("%:p:h"))
+    vim.opt.guicursor = "a:ver25"
   end,
 })
-
 
 require("lazy").setup("plugins")
