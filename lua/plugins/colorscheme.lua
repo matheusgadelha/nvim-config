@@ -7,9 +7,9 @@ return {
   -- config = function()
   --   vim.cmd.colorscheme "no-clown-fiesta"
   -- end
-  "bluz71/vim-moonfly-colors",
+  "scottmckendry/cyberdream.nvim",
   config = function()
-    vim.cmd.colorscheme "moonfly"
+    vim.cmd.colorscheme "cyberdream"
   end
 }
 
