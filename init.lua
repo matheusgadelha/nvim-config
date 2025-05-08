@@ -36,4 +36,28 @@ vim.api.nvim_create_autocmd("VimLeave", {
   end,
 })
 
+-- in your init.lua or a sourced lua module
+vim.api.nvim_create_user_command('DiffGitBranch', function(opts)
+  local branch = opts.args
+  -- get the path of the file in the current window
+  local filepath = vim.fn.expand('%')
+  if filepath == '' then
+    vim.notify('No file in the current buffer!', vim.log.levels.ERROR)
+    return
+  end
+
+  -- open a new empty vertical split
+  vim.cmd('vnew')
+  -- read the branch’s version of the same file
+  vim.cmd(string.format('read !git show %s:./%s', branch, filepath))
+  -- turn on diff mode in both windows
+  vim.cmd('windo diffthis')
+end, {
+  nargs = 1,
+  complete = function(ArgLead)
+    -- use git’s branch completion
+    return vim.fn.getcompletion(ArgLead, 'branch')
+  end,
+})
+
 require("lazy").setup("plugins")
