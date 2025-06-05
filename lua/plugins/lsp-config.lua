@@ -9,7 +9,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "rust_analyzer", "pyright", "clangd", "ts_ls" },
+        ensure_installed = { "lua_ls", "rust_analyzer", "pyright", "clangd", "ts_ls", "zls" },
       })
     end
   },
@@ -31,7 +31,9 @@ return {
       lspconfig.ts_ls.setup({
         capabilities = capabilities
       })
-
+      lspconfig.zls.setup({
+        capabilities = capabilities
+      })
       -- Use LspAttach autocommand to only map the following keys
       -- after the language server attaches to the current buffer
       vim.api.nvim_create_autocmd('LspAttach', {

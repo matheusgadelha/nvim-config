@@ -60,4 +60,7 @@ end, {
   end,
 })
 
+-- In terminal mode, let <Esc> jump to normal mode
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+
 require("lazy").setup("plugins")
