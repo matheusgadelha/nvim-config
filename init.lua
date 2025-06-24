@@ -63,4 +63,77 @@ end, {
 -- In terminal mode, let <Esc> jump to normal mode
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 
+-- Reload function for editing lua configs
+function _G.ReloadConfig()
+  for name,_ in pairs(package.loaded) do
+    if name:match('^user') then      -- replace "user" with your namespace
+      package.loaded[name] = nil
+    end
+  end
+  dofile(vim.env.MYVIMRC)
+end
+
+vim.api.nvim_set_keymap(
+  'n', '<Leader>rv',
+  '<Cmd>lua ReloadConfig()<CR>',
+  { noremap = true, silent = true }
+)
+vim.cmd('command! ReloadConfig lua ReloadConfig()')
+
+
+
 require("lazy").setup("plugins")
+
+-- Viewing custom files in telescope
+
+local pickers = require("telescope.pickers")
+local finders = require("telescope.finders")
+local conf = require("telescope.config").values
+local previewers = require("telescope.previewers").cat
+
+function ViewFilesInTelescope(prompt_title, file_list)
+  pickers.new({}, {
+    prompt_title = "prompt_title",
+    finder = finders.new_table {
+      results = file_list,
+    },
+    previewer = previewers.new({}),
+    sorter = conf.generic_sorter({}),
+  }):find()
+end
+
+function git_diff_files(base_branch)
+  base_branch = base_branch or "main"
+  local handle = io.popen("git diff --name-only " .. base_branch)
+  if not handle then return {} end
+
+  local result = {}
+  for line in handle:lines() do
+    if #line > 0 then
+      table.insert(result, line)
+    end
+  end
+  handle:close()
+  return result
+end
+
+function changed_files_from(base_branch)
+  base_branch = base_branch or "main"
+  local files = git_diff_files(base_branch)
+  if #files == 0 then
+    vim.notify("No changed files found in branch: " .. base_branch, vim.log.levels.INFO)
+    return
+  end
+  ViewFilesInTelescope("Changed Files", files)
+end
+
+-- Create user command for changed_files_from
+vim.api.nvim_create_user_command('ChangedFilesFromBranch', function(opts)
+  changed_files_from(opts.args)
+end, {
+  nargs = '?', -- Optional argument
+  complete = function(ArgLead)
+    -- Use git's branch completion
+    return vim.fn.getcompletion(ArgLead, 'branch')
+  end,
+})
