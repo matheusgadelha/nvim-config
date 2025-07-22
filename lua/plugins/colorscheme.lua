@@ -7,9 +7,13 @@ return {
   -- config = function()
   --   vim.cmd.colorscheme "no-clown-fiesta"
   -- end
-  "scottmckendry/cyberdream.nvim",
+  --"scottmckendry/cyberdream.nvim",
+  --config = function()
+  --  vim.cmd.colorscheme "cyberdream"
+  --end
+  "alljokecake/naysayer-theme.nvim",
   config = function()
-    vim.cmd.colorscheme "cyberdream"
+    vim.cmd.colorscheme "naysayer"
   end
 }
 
