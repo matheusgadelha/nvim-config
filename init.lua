@@ -60,8 +60,8 @@ end, {
   end,
 })
 
--- In terminal mode, let <Esc> jump to normal mode
-vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+-- In terminal mode, let <C-Esc> jump to normal mode
+vim.api.nvim_set_keymap('t', '<Esc><Esc><Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 
 -- Reload function for editing lua configs
 function _G.ReloadConfig()

@@ -11,9 +11,13 @@ return {
   --config = function()
   --  vim.cmd.colorscheme "cyberdream"
   --end
-  "alljokecake/naysayer-theme.nvim",
+  --"alljokecake/naysayer-theme.nvim",
+  --config = function()
+  --  vim.cmd.colorscheme "naysayer"
+  --end
+  "luisiacc/the-matrix.nvim",
   config = function()
-    vim.cmd.colorscheme "naysayer"
+    vim.cmd.colorscheme "thematrix"
   end
 }
 
