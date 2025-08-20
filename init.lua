@@ -137,3 +137,8 @@ end, {
     return vim.fn.getcompletion(ArgLead, 'branch')
   end,
 })
+
+-- Show diagnostics in a floating window
+vim.keymap.set('n', '<leader>e', function()
+  vim.diagnostic.open_float()
+end, { noremap = true, silent = true })
